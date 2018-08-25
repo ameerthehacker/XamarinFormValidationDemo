@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:Validators="clr-namespace:XamarinFormValidation.Validators.Implementations"
+             xmlns:Behaviors="clr-namespace:XamarinFormValidation.Behaviors"
+             xmlns:local="clr-namespace:XamarinFormValidation" x:Class="XamarinFormValidation.MainPage">
+    <StackLayout Padding="15">
+        <StackLayout.Behaviors>
+            <Behaviors:ValidationGroupBehavior x:Name="form"/>
+        </StackLayout.Behaviors>
+        
+        <Label>Enter your name</Label>
+        <Entry>
+            <Entry.Behaviors>
+                <Behaviors:ValidationBehavior Group="{x:Reference form}" 
+                                              PropertyName="Text">
+                    <Behaviors:ValidationBehavior.Validators>
+                        <Validators:RequiredValidator />
+                    </Behaviors:ValidationBehavior.Validators>
+                </Behaviors:ValidationBehavior>
+            </Entry.Behaviors>
+        </Entry>
+        
+        <Label>Enter the mobile number</Label>
+        <Entry>
+            <Entry.Behaviors>
+                <Behaviors:ValidationBehavior Group="{x:Reference form}" 
+                                              PropertyName="Text">
+                    <Behaviors:ValidationBehavior.Validators>
+                        <Validators:RequiredValidator />
+                        <Validators:FormatValidator
+                            Message="Mobile number must be 10 digit" 
+                            Format="^[0-9]{10}$" />
+                    </Behaviors:ValidationBehavior.Validators>
+                </Behaviors:ValidationBehavior>
+            </Entry.Behaviors>
+        </Entry>
+
+        <Button Text="Submit" 
+                IsEnabled="{Binding Source={x:Reference form}, Path=IsValid}"/> 
+    </StackLayout>
+</ContentPage>
